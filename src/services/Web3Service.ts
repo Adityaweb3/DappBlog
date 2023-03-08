@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 import KolumnArtifact from "./KolumnKontract.json";
 
 declare let window: any;
-const contractAddress = "0x1b08b4d4455c185f3ca3b64e498ff5346c9ecb55";
+const contractAddress = "0x7D5CdeAcDcD394DBEe66Dee529063dEC82a5Ef6B";
 
 export const Web3Service = {
   //Connect to Metamask
@@ -36,7 +36,7 @@ export const Web3Service = {
       KolumnArtifact.abi,
       signer
     );
-    const txResponse = await contract.createKolumn(
+    const txResponse = await contract.createBlog(
       title,
       content,
       Date.now().toString()
@@ -52,7 +52,7 @@ export const Web3Service = {
       KolumnArtifact.abi,
       provider
     );
-    const data = await contract.viewLatestKolumns(page);
+    const data = await contract.viewLatestBlogs(page);
     return data;
   },
 
@@ -63,7 +63,7 @@ export const Web3Service = {
       KolumnArtifact.abi,
       provider
     );
-    const data = await contract.viewKolumn(id);
+    const data = await contract.viewBlog(id);
     return data;
   },
 

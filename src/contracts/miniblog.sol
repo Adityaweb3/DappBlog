@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL
 pragma solidity ^0.8.0;
 
-contract KolumnKontract {
+contract MiniBlog {
     //Kolumn Structure
-    struct Kolumn {
+    struct Blog {
         uint256 id;
         string title;
         string content;
@@ -12,20 +12,20 @@ contract KolumnKontract {
         address payable author;
     }
 
-    uint256 public kolumnKount = 0;
-    mapping(uint256 => Kolumn) public kolumns;
+    uint256 public blogCount = 0;
+    mapping(uint256 => Blog) public blogs;
 
     //Add a new Kolumn
-    function createKolumn(
+    function createBlog(
         string memory _title,
         string memory _content,
         string memory _timestamp
     ) public {
         require(msg.sender != address(0x0));
         require(bytes(_title).length * bytes(_content).length > 0);
-        kolumnKount++;
-        kolumns[kolumnKount] = Kolumn(
-            kolumnKount,
+        blogCount++;
+        blogs[blogCount] = Blog(
+            blogCount,
             _title,
             _content,
             _timestamp,
@@ -35,37 +35,37 @@ contract KolumnKontract {
     }
 
     //View Kolumn by ID
-    function viewKolumn(uint256 _id)
+    function viewBlog(uint256 _id)
         public
         view
-        returns (Kolumn memory kolumn)
+        returns (Blog memory blog)
     {
-        kolumn = kolumns[_id];
+        blog = blogs[_id];
     }
 
     //View Latest Columns
-    function viewLatestKolumns(uint256 _flag)
+    function viewLatestBlogs(uint256 _flag)
         public
         view
-        returns (Kolumn[] memory)
+        returns (Blog[] memory)
     {
         //Kolumns browsed
         uint256 _localLatest = (_flag - 1) * 10;
-        require(kolumnKount > _localLatest);
+        require(blogCount > _localLatest);
         //Start Sending Kolumns from
-        _localLatest = kolumnKount - _localLatest;
+        _localLatest = blogCount - _localLatest;
         uint256 _counter = 0;
         if (_localLatest > 10) {
-            Kolumn[] memory _latestKolumns = new Kolumn[](10);
+            Blog[] memory _latestKolumns = new Blog[](10);
             for (uint256 i = _localLatest; i > (_localLatest - 10); i--) {
-                _latestKolumns[_counter] = kolumns[i];
+                _latestKolumns[_counter] = blogs[i];
                 _counter++;
             }
             return _latestKolumns;
         } else {
-            Kolumn[] memory _latestKolumns = new Kolumn[](_localLatest);
+            Blog[] memory _latestKolumns = new Blog[](_localLatest);
             for (uint256 i = _localLatest; i > 0; i--) {
-                _latestKolumns[_counter] = kolumns[i];
+                _latestKolumns[_counter] = blogs[i];
                 _counter++;
             }
             return _latestKolumns;
@@ -74,7 +74,9 @@ contract KolumnKontract {
 
     //Tip Author
     function sendTip(uint256 _id) public payable {
-        kolumns[_id].author.transfer(msg.value);
-        kolumns[_id].tips += msg.value;
+        blogs[_id].author.transfer(msg.value);
+        blogs[_id].tips += msg.value;
     }
 }
+
+

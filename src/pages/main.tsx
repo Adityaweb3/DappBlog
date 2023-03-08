@@ -32,8 +32,8 @@ const Main: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>Quill</title>
-        <meta name="Kolumn" content="Publish your articles on Blockchain" />
+        <title>DappBlog</title>
+        <meta name="DappBlog" content="Publish your articles on Blockchain" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <NavBar connected={connected} />
